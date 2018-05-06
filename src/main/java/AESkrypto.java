@@ -7,6 +7,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AESkrypto {
+	
 
 	private static String key="";
 	private static String initVector="";

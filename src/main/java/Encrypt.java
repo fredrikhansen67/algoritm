@@ -18,7 +18,6 @@ public class Encrypt {
 	private static PrivateKey privateKey;
 	//	 private String kodat = "";
 
-
 	/**
 	 * Default Constructor for the encryption class
 	 */
