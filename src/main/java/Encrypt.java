@@ -48,7 +48,7 @@ public class Encrypt {
 	 */
 	public byte[] decrypt(byte [] encrypted) throws Exception {
 		Cipher cipher = Cipher.getInstance("RSA");  
-		cipher.init(Cipher.DECRYPT_MODE, pubKey);      
+		cipher.init(Cipher.DECRYPT_MODE, pubKey);
 		return cipher.doFinal(encrypted);
 	}
 
@@ -68,10 +68,10 @@ public class Encrypt {
 	
 
 	public static void main(String [] args) throws Exception {
-		String mess = "Provskott";
+		String mess = "Provskott i luften som man skulle kunna säga";
 		Encrypt ee = new Encrypt();
 		byte[] kodat = ee.encrypt(mess);
-		System.out.println(kodat);
+		System.out.println(" Bang :"+kodat+" \n * ");
 		System.out.println(new String(ee.decrypt(kodat)));
 	}
 }
