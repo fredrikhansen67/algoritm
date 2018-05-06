@@ -28,7 +28,7 @@ public class Encrypt {
 	}
 
 	/**
-	 * 
+	 *  
 	 * @param message
 	 * @return
 	 * @throws Exception
