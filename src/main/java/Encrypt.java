@@ -1,10 +1,16 @@
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+
 import javax.crypto.Cipher;
+
 
 /**
  * 
@@ -12,11 +18,11 @@ import javax.crypto.Cipher;
  *
  * Simple 2048 bit RSA encryption
  */
+
 public class Encrypt {
 	private static  KeyPair keyPair;
 	private static PublicKey pubKey;
 	private static PrivateKey privateKey;
-	//	 private String kodat = "";
 
 	/**
 	 * Default Constructor for the encryption class
@@ -25,6 +31,15 @@ public class Encrypt {
 		Encrypt.keyPair = generateKeyPair();
 		pubKey = keyPair.getPublic();
 		privateKey = keyPair.getPrivate();
+	}
+	public String getDecryptedContent() {
+		try {
+			return new String(decrypt(readEncryptionFromFile()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
@@ -66,12 +81,37 @@ public class Encrypt {
 		catch(Exception e) {System.out.println("Failed to generate keypair, something went really wrong here" +e);return null;}
 	}
 	
+	public static void generateEncryption(byte[] secPassw) {
+		try {
+			File fil = new File("C:\\aaa/RSAenc.crypto");
+			FileOutputStream outputStream = new FileOutputStream(fil);
+			outputStream.write(secPassw);
+			outputStream.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public byte[] readEncryptionFromFile() {
+		try {
+			File fil = new File("C:\\aaa/RSAenc.crypto");
+			FileInputStream inputStream = new FileInputStream(fil);
+			byte[] inputBytes = new byte[(int) fil.length()];
+			inputStream.read(inputBytes);
+			inputStream.close();
+			return inputBytes;
+
+		} catch (IOException e) {
+			e.printStackTrace(); return null;
+		}
+	}
 
 	public static void main(String [] args) throws Exception {
-		String mess = "Provskott i luften som man skulle kunna säga";
+		String mess = "mynewcoolerpassword";
 		Encrypt ee = new Encrypt();
 		byte[] kodat = ee.encrypt(mess);
-		System.out.println(" Bang :"+kodat+" \n * ");
-		System.out.println(new String(ee.decrypt(kodat)));
+		generateEncryption(kodat);
+		System.out.println(ee.getDecryptedContent());
 	}
 }
