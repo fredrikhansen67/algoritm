@@ -25,10 +25,14 @@ public class Main {
 		System.out.println("===");
 //		System.out.println(ee.decrypt(readFileAsString("C://aaa/kodat.txt").getBytes()));
 */
+		/**
+		 * AESLogin
+		 */
 		String pw = "This is a secret";
-		AESLogin al = new AESLogin(pw);
-		al.generateEncryption("Superhemligt");
-		System.out.println("PASSWORD:" + al.doLogin(pw));
+		AESLogin al = new AESLogin();
+		//Generate encryptionfile when new password is needed
+		al.generateEncryption("myNewPassword");
+		System.out.println("PASSWORD:" + al.doLogin());
 		
 //		String string = new String(byte[] bd, Charset charset);
 //		System.out.println("BYTES :" +readFileAsString("C://aaa/kodat.txt").getBytes(StandardCharsets.UTF_8));
