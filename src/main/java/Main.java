@@ -7,7 +7,7 @@ public class Main {
 		/**
 		 * RSA Encrypt
 		 */
-		String mess = "mynewcoolestpassword2";
+		String mess = "userpw=mynewcoolestpasswords\nother=omygod";
 		Encrypt ee = new Encrypt();
 		byte[] kodat = ee.encrypt(mess);
 		Encrypt.generateEncryption(kodat);
