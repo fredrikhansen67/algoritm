@@ -9,6 +9,7 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.KeySpec;
 import java.util.Scanner;
 
 import javax.crypto.BadPaddingException;
@@ -17,7 +18,9 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AESLogin {
@@ -97,7 +100,8 @@ public class AESLogin {
         SecureRandom random = new SecureRandom();
         random.nextBytes(iv);
         IvParameterSpec IV = new IvParameterSpec(iv);
-		        
+		       
+       
         return IV;
     }
 	
@@ -105,10 +109,12 @@ public class AESLogin {
 		 Scanner scan = new Scanner(System.in);
 	 
 	        try {
-	            KeyGenerator gen = KeyGenerator.getInstance("AES");
-	            gen.init(256);
+	        	SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+	        	KeySpec spec = new PBEKeySpec(pwkey.toCharArray(), generateSalt(), 65536, 256);
+	        	SecretKey tmp = factory.generateSecret(spec);
+	        	SecretKey key = new SecretKeySpec(tmp.getEncoded(), "AES");
 
-	            SecretKey key = gen.generateKey();
+//	            SecretKey key = gen.generateKey();
 	            byte[] keyBytes = key.getEncoded();
 	            System.out.print("Ge nyckeln ett filnamn: ");
 	            String filename = scan.next();
@@ -121,5 +127,13 @@ public class AESLogin {
 	        } catch (NoSuchAlgorithmException e) {
 	        }
 
+	 }
+	 
+	 public byte[]  generateSalt() {
+		 int ivSize = 16;
+		 byte[] iv = new byte[ivSize];
+		 SecureRandom random = new SecureRandom();
+		 return iv;
+		 
 	 }
 }
